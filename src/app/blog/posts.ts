@@ -1,5 +1,5 @@
 "use server"
-import { prisma } from "../../../../nextjslearning/lib/prisma";
+import {prisma} from "../../../lib/prisma";
 
 export const getAllPosts = async () => {
   // const response = await fetch('/api/posts')
