@@ -2,7 +2,7 @@
 import {useEffect, useState} from "react";
 import {getAllPosts} from "@/app/blog/posts";
 import Posts from "@/components/Posts";
-import PostSearch from "@/components/PostSearch";
+// import PostSearch from "@/components/PostSearch";
 
 export default function Blog() {
   const [posts, setPosts] = useState<any>([])
