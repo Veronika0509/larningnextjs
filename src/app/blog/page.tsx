@@ -1,12 +1,11 @@
 'use client'
-import Link from "next/link";
 import {useEffect, useState} from "react";
-import {getAllPosts} from "@/services/getPosts";
+import {getAllPosts} from "@/app/blog/posts";
 import Posts from "@/components/Posts";
 import PostSearch from "@/components/PostSearch";
 
-export default async function Blog() {
-  const [posts, setPosts] = useState<any[]>([])
+export default function Blog() {
+  const [posts, setPosts] = useState<any>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -18,7 +17,7 @@ export default async function Blog() {
   return (
     <div>
       <h1>Blog Page</h1>
-      <PostSearch onSearch={setPosts} />
+      {/*<PostSearch onSearch={setPosts} />*/}
       {loading ? (
         <h2>Loading...</h2>
       ) : (

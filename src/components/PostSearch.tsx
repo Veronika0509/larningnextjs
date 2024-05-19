@@ -1,6 +1,6 @@
 'use client'
 import React, {useState} from 'react';
-import {getPostsBySearch} from "../services/getPosts";
+import {getPostsBySearch} from "../app/blog/posts";
 
 interface Props {
   onSearch: (posts: any[]) => void

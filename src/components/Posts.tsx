@@ -6,13 +6,14 @@ interface Props {
 }
 
 const Posts = ({posts}: Props) => {
+
   return (
     <div>
       <ul className='posts'>
         {posts.map((post: any) => (
-          <li>
-            <Link href={`/blog/` + post.id}>{post.title}</Link>
-          </li>
+          <Link href={`/blog/${post.id}`} className='post'>
+            <p>{post.title}</p>
+          </Link>
         ))}
       </ul>
     </div>

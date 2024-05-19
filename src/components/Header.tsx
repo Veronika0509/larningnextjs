@@ -1,5 +1,6 @@
-import Link from "next/link";
 import {Navigation} from "@/components/Navigation";
+import {auth} from "@/auth";
+import type {Session} from "next-auth";
 
 const navLinks = [
   {label: 'Home', href: '/'},
@@ -7,10 +8,11 @@ const navLinks = [
   {label: 'About', href: '/about'}
 ]
 
-export const Header = () => {
+export async function Header() {
+  const session: Session | null = await auth()
   return (
     <header>
-      <Navigation navLinks={navLinks}/>
+      <Navigation navLinks={navLinks} session={session} />
     </header>
   )
 }

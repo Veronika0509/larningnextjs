@@ -2,6 +2,9 @@
 
 import {usePathname} from "next/navigation";
 import Link from "next/link";
+import type {Session} from "next-auth";
+import { signOut } from "next-auth/react"
+import Image from "next/image";
 
 interface NavLink {
   label: string,
@@ -9,10 +12,11 @@ interface NavLink {
 }
 
 interface Props {
-  navLinks: NavLink[]
+  navLinks: NavLink[],
+  session: Session | null
 }
 
-export const Navigation = ({navLinks}: Props) => {
+export const Navigation = ({navLinks, session}: Props) => {
   const pathname = usePathname()
 
   return (
@@ -24,6 +28,23 @@ export const Navigation = ({navLinks}: Props) => {
           <Link href={link.href} key={link.label} className={isActive ? 'activeLink': 'link'}>{link.label}</Link>
         )
       })}
+      {session?.user ? (
+        <div className='sign-links'>
+          <Link href='/' className='link' onClick={() => signOut({callbackUrl: '/'})}>Sign Out</Link>
+          <div>
+            <Link href='/profile' className='link'>
+              {session?.user?.image && (
+                <div>
+                  <Image src={session.user.image} alt='User Image' width={40} height={40} />
+                  <p>{session?.user?.name}</p>
+                </div>
+              )}
+            </Link>
+          </div>
+        </div>
+      ) : (
+        <Link href='/api/auth/signin' className='link'>Sign In</Link>
+      )}
     </div>
   )
 }

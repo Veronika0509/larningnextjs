@@ -1,30 +1,32 @@
-import {Metadata} from "next";
+'use client'
+import {getPostById} from "@/app/blog/posts";
+import {useEffect, useState} from "react";
+import {deletePost} from "@/app/blog/actions";
 import Link from "next/link";
 
 interface Props {
   params: {
-    postId: number
-  }
-}
-
-async function getPost(id: number) {
-  const response = await fetch('https://jsonplaceholder.typicode.com/posts/' + id)
-  return response.json()
-}
-
-export async function generateMetadata({params: {postId}}: Props): Promise<Metadata> {
-  const post: any = await getPost(postId)
-  return {
-    title: post.title
+    postId: string
   }
 }
 
 export default async function Post({params: {postId}}: Props) {
-  const post = await getPost(postId)
+  const [post, setPost] = useState<any>([])
+
+  useEffect(() => {
+    getPostById(postId).then(setPost)
+  }, []);
+
   return (
     <div className='postItem'>
-      <h2>{post.title}</h2>
-      <p>{post.body}</p>
+      <div>
+        <h2>{post.title}</h2>
+        <p>{post.body}</p>
+        <form action={deletePost.bind(null, postId)}>
+          <input type="submit" value='Delete post' />
+        </form>
+        <Link href={`/blog/${postId}/edit`}>Edit</Link>
+      </div>
     </div>
   )
 }
